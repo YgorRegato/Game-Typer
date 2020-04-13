@@ -1,0 +1,175 @@
+body{
+
+	overflow: scroll;
+}
+
+.principal{
+	position: relative;
+	width: 940px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.frase-jogo{
+
+	font-size: 30px;
+	font-weight: bold;
+	color: gold;
+}
+
+.imagem-carregamento{
+
+	width: 60px;
+	display: none;
+}
+
+.contadores{
+
+	list-style-type: none;
+	
+}
+
+.area-digitacao{
+
+	border: 2px solid black;
+	width: 100%;
+	height: 100px;
+	font-size: 24px;
+}
+
+.game-over{
+
+	font-size: 35px;
+	color: red;
+	font-weight: bold;
+	display: block;
+}
+
+.invisivel{
+
+	display: none;
+	
+}
+
+#botao-estilo{
+
+	font-size: 30px;
+	color: blue;
+	font-weight: bold;
+	text-transform: uppercase;
+	border: none;
+	background: white;
+}
+
+.botoes{
+	text-align: left;
+	position:relative;		
+}
+
+.botoes-opcoes{
+	
+	display: inline-block;
+	
+}
+
+.botao-salva-placar{
+
+	position: absolute;
+	right: 0px;
+}
+
+
+.mensagem-salvo{
+	display: none;
+	position: absolute;
+	right: 0;
+	color: red;
+	font-weight: bold;
+}
+
+.campo-busca-frase{
+
+	display: none;
+	font-style: italic;
+	font-weight: bold;
+	color: blue;
+	text-align: center;
+}
+
+#erro-busca-frase{
+	display: none;
+	color: red;
+	font-weight: bold;
+	position: relative;
+	left: 50px;
+}
+	
+
+
+
+
+.area-desativada{
+
+	background-color: lightgray;
+}
+
+.borda-verde{
+
+	border: 3px solid green;
+}
+
+.borda-vermelha{
+
+	border: 3px solid red;
+}
+
+.placar{
+	display: none;
+	width: 940px;
+	margin: 0 auto;
+	height: 50px;
+
+
+}
+
+.placar h3{
+
+	text-align: center;
+}
+
+.tabela{
+
+	width: 50%;
+	margin: 0 auto;
+	height: 30px;
+
+}
+
+.nome-jogador{
+
+	display: block;
+	border: 2px solid black;
+	height: 50px;
+	width: 30%;
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 3px;
+}
+
+.erro-servidor{
+
+	color: red;
+	display: none;
+
+}
+
+
+.aumenta-fonte{
+	color: red;
+	font-size: 40px;
+}
+
+
+
+
+

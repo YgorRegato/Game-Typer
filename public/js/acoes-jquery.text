@@ -1,0 +1,616 @@
+											AJAX (Requisições assícronas)
+
+Para que serve: -O AJAX nos permite carregar apenas uma parte do conteúdo da página, fazendo com que o 
+				 site do usuário fique mais leve , e por consequência mais rápido na hora de carregar.
+			     É muito comum encontrarmos sites que abusam desta técnica, conhecida como Infinte Scrolling, ou scroll infinito em português claro. O Facebook, por exemplo, carrega apenas uma parte das postagens de seu mural, e quando o usuário vai se aproximando do fim da página ele carrega mais postagens assincronamente e os adiciona embaixo das já existentes! Um uso muito esperto do AJAX, assim o usuário não precisa carregar todas as postagens de todos os seus amigos antes de abrir a página!
+
+			    -Com o AJAX também conseguimos enviar dados para o servidor sem depender de um form do 
+			     HTML. Com AJAX conseguimos enviar dados para servidor tanto via POST como com GET também.
+
+			    -Com requisições AJAX conseguimos trazer novos dados para o usuário sem que ele precise 
+			     trocar de página. Podemos buscar dados do servidor e alterar a página sem trocar de página, o que trás um dinamismo as nossas páginas.
+
+			    -Com AJAX, conseguimos realizar requisições HTTP paralelamente ao nosso Javascript, sem 
+			     interromper seu funcionamento, visto que estas requisições são assíncronas.
+			     O AJAX, como a própria sigla( Asynchronous Javascript and XML) diz é assíncrono, ou seja, ele envia a requisição de modo paralelo ao nosso Javascript, sem travá-lo esperando a resposta.
+
+			    -O AJAX nos permite criar aplicações como Chat's e notificações, pois não precisamos 
+			     recarregar a página para trocar dados.
+			     Hoje em dia notificações são muito comuns na Web, e elas são feitas através de requisições assíncronas no navegador. Já imaginou um chat aonde temos que recarregar a página toda vez para ver se chegou uma nova mensagem ? Seria uma péssima experiência para o usuário!
+
+			    -Com AJAX conseguimos atualizar os dados da página com novas informações mesmo após o 
+			     usuário já ter carregado a página.
+			     Com requisições AJAX conseguimos trazer novas informações e atualizar dados da página. Um bom exemplo deste uso são os sites de e-commerce, que conseguem buscar o endereço quando informamos o CEP, isso tudo sem trocar a página.
+
+
+ 
+
+
+
+
+
+
+
+$.get("end.", function) = essa é uma forma de fazermos uma requisição GET com o jquery. Passamos 
+						  primeiro o endereço da requisição entre aspas e depois, separado por vírgula, passamos o que queremos fazer logo após o retorno da requisição. Podemos passar uma função anônima e uma nominal.
+
+
+
+						  Ex.:   botaoTrocaFrase.click(trocaFrase);
+
+								 function trocaFrase(){
+
+									$.get("http://localhost:3000/frases", function(data){
+
+										var frase= data[0].texto;
+										$(".frase").text(frase)
+
+									});
+									
+								}
+
+							Dentro dos parenteses da function da requisição vai o nome dado pelo desenvolvedor que corresponde o nome do arquivo retornado na requisição. No nosso exemplo, seguimos a convenção e colocamos o nome 'data', porém pode-se colocar qualquer nome.
+			
+
+$.post = assim como usamos o mpetodo $.get() para requisitarmos algo no servidor, para enviarmos dados
+ 		 para serem salvos no servidor, usamos o método $.post().
+
+
+ 		 var dados= {placar, pontos}
+
+ 		 $.post("http://localhost:3000/placar", dados, function(){
+
+ 		 		console.log("Salvo no servidor");
+ 		 });
+
+
+ 		 O objeto deve conter, na primeira posição, o nome do dado a ser enviado. Em segunda posição, o valor desse dado.
+
+
+.fail(function()) = esse método é usado na requisição para que aconteça algo caso a requisição apresente
+					algum erro. Ele é, geralmente, colocado após o método de requisição.
+
+
+					Ex.:	botaoTrocaFrase.click(trocaFrase);
+
+								 function trocaFrase(){
+
+									$.get("http://localhost:3000/frases", trocandoFrase)
+
+									.fail(function(){
+
+										$("#mensagem-erro").show();
+
+										setTimeOut(function(){
+
+											$("#mensagem-erro").hide();
+										},2000)
+									})
+
+					Se a resposta da requisição for positiva, ela executa o método dentro dos parâmetros do $.get(). Se ela for negativa, ela executa o método .fail()
+
+
+
+.always() = esse método do Ajax permite que se faça SEMPRE uma ação definida nos parâmetros APÓS A 
+			EXECUÇÃO DE REQUISIÇÃO. Ou seja, o always() aguarda o processo de execução da requisição terminar para que ele faça a sua execução.
+			
+
+			Ex.:   		function trocaFrase(){
+
+							$("#imagem").show();
+
+							$.get("http://localhost:3000/frases", trocandoFrase)
+
+									.fail(function(){
+
+										$("#mensagem-erro").show();
+
+										setTimeOut(function(){
+
+											$("#mensagem-erro").hide();
+										},2000)
+									})
+									.always(function(){
+
+										$("#imagem").hide();
+									});
+
+						Note que ao chamar a função 'trocaFrase()', uma imagem é mostrada na página e ao terminar a requisição, independente do status dessa requisição(se deu erro ou não), o método .always() esconde a imagem. Note que é um método que foi atrelado ao $.get(), assim como o método .fail(). Vejamos esse $.get() em uma linha reta para um melhor entendimento:
+
+						$.get("http://localhost:3000/frases", trocandoFrase).fail().always();
+
+
+
+{id: xxx} = para enviarmos algum dado ao servidor pelo método $.get() para especificarmos a requisição,
+			temos sempre que enviar esse dado em forma de um objeto js. Esse dado vai na segunda posição nos parâmetros do método $.get(), logo após o endereço do servidor. O primeiro elemento entre chaves é o nome do dado presente no servidor que quer buscar. O segundo, é o valor do dado que quer buscar.
+
+
+			Ex.: 	 var dados= {id: fraseId};
+					 
+					 $.get("http://localhost:3000/frases", dados, trocandoFrase);
+
+
+					 Note que o id a ser enviado vem antes da função. Isso porque o método $.get() primeiro busca o endereço, depois envia os dados que tiver para enviar, como o nosso id e por último executa a função.
+
+					 Também posso, ao invés de colocar as chaves dentro de uma variável, posso passar direto no $.get().
+
+					
+					 Ex.:  $.get("http://localhost:3000/frases", {id: fraseId}, trocandoFrase);
+
+
+											MÉTODOS
+
+.show() = essa propriedade retira a transparência dada a um elemento.
+
+		  		Ex.:$(".teste").show();
+
+
+.hide() = essa prorpiedade dá transparência a um elemento.
+
+				Ex.:$(".teste").hide();
+
+
+.slideDown() = O método slideDown () é usado para deslizar um elemento para baixo com uma certa suavidade. Essa 
+			   suavidade pode ser a padrão do próprio método, ou pode ser alterada nos parâmetros do método, com
+			   os valores 'slow', 'fast' ou milessegundos
+
+				Ex.:	$("#flip").click(function(){
+						  $("#panel").slideDown();
+						});
+
+				No exemplo, o painel desce de uma forma suave na página apresentando o conteúdo do elemento. Obviamente que para que o elemento já esteja escondido quando a página for carregada, ele deve possuir alguma classe que o esconda, e quando o .slideDown() for chamado, ele retirará a classe.
+
+
+				Quando se quer remover um elemento com o efeito do .fadeOut, temos que garantir que o fadeOut seja executado primeiro, para depois o elemento ser excluído. Para isso, temos duas opções:
+
+				1° colocando uma função que remove o elemento dentro dos parâmetros do método .fadeOut().
+
+					Ex.: 	$('li').dblclick(function() {
+
+							    var $this = $(this);
+
+							    $this.fadeOut(function() {
+							        $this.remove();
+							    })
+							}); 
+
+
+				2° colocando o método .remove() dentro de um setTimeOut.
+
+					Ex.:  $("li").dblclick(function(){
+
+								$(this).fadeOut(500);
+
+								setTimeOut(function(){
+
+									$(this).remove();
+
+								},700);
+						  });
+
+
+
+.slideUp() = O método slideUp () é usado para deslizar um elemento para cima com uma certa suavidade. Essa 
+			   suavidade pode ser a padrão do próprio método, ou pode ser alterada nos parâmetros do método, com
+			   os valores 'slow', 'fast' ou milessegundos
+
+				Ex.:	$("#flip").click(function(){
+						  $("#panel").slideUp();
+						});
+
+				No exemplo, o painel sobe de uma forma suave na página escondendo o conteúdo do elemento.
+
+
+.slideToggle() = essa propriedade esconde e mostra elementos de forma suave para cima e para baixo conforme é 
+				 executado o evento. A suavidade pode ser a padrão da propriedade ou pode ser definida nos seus parâmetros com os valores 'slow', 'fast' ou milessegundos.
+
+			  	Ex.: $(".teste").slideToggle();
+
+			  		 $(".teste").slideToggle(1000);
+
+			  		 $(".teste").slideToggle("slow");
+
+			  		 $(".teste").slideToggle("fast");
+
+
+
+.toggle() = o método .toggle() esconde e mostra um elemento conforme o evento é provocado. Por exemplo, se 
+			temos um botão para mostrar o placar de um jogo e escondê-lo e esse botão possui o método .toggle(), toda vez que o botão for clicado e o placar estiver amostra, ele será escondido e, toda vez que for clicado e estiver escondido, ele será mostrado.
+
+
+				Ex.: $("#botao-placar").toggle();
+
+
+			Ps: o método .toggle() não exclui ou cria um elemento, ele apenas altera o display do elemento. 
+
+
+
+.toggleClass() = o método .toggleClass() adiciona ou retira uma classe de um elemento conforme o evento é 
+				 provocado. Por exemplo, se temos um botão que toda vez que for clicado ele adiciona uma classe que esconde o elemento(por exemplo a classe .invisivel) ou retira essa classe para mostrar o placar de um jogo e esse botão possui o método .toggleClass(), toda vez que o botão for clicado e o placar estiver amostra, ele irá adicionar a classe para que o placar fique invisível e, toda vez que for clicado e estiver escondido, ele o toggleClass irá retirar a classe para que o elemento seja mostrado. O método .toggleClass() leva sempre uma classe nos seus parâmetros.
+
+				 	Ex.: $("#botao-placar").toggleClass(".invisivel");	
+
+
+				 	.toggle() vs .toggleClass()-> a diferença entre os dois métodos é que o primeiro apenas 	
+				 								  esconde e mostra o elemento e mais nada. Já o segundo, adiciona e retira a classe de um elemento, independente da formatação que esteja nessa classe, se é para esconder um elemento, se é para mudar a cor de um texto, se é para aumentar o tamanho de um elemento etc.
+
+
+
+.animate({}) = o método animate({}) é um método responsável por provocar animações ao elemento que o chamou. 
+			   Esse método recebe dois parâmentos:
+
+			   1° o que vai dentro das chaves-> qualquer ação animável de css, como 'height', 'width', 'left', 'top', 'opacity' e, também, um scrollTop que é uma animação aplicada ao scroll da página, coisa que o css não pode fazer. Todos esses possuem um valor em "px". ex: scrollTop: "30px".
+
+			   2° o que vai dentro dos parentese-> logo após as chaves e separado por vírgula, vai o tempo que o método animate({}) levará para executar a ação. ex: animate(
+					   															{
+					   																xxxx
+
+					   															},1000);
+
+
+						Ex.:		$("div").animate(
+
+									   	{
+									   		fontSize:"30px",
+									   		Left: "23px",
+									   		width: "38px"
+
+									   	},500);
+
+
+
+.each() = esse método é usado para fazer iteração de elementos. Ele percorre cada elemento para que seja
+		  feita alguma ação em cada um deles. O método .each() é similar ao .forEach().
+
+
+		  1° iternando um elemento html:  $("li").each(function(){
+
+		  										console.log(this);
+
+		  									 });
+
+
+
+		  2° iterando um array:  	var letras = ['a', 'b', 'c'];
+
+									$.each(letras, function() {
+
+     									console.log(this);
+									});  
+
+
+
+
+.fadeIn() = é uma propriedade que retira a transparência de um elemento escondido de forma suave. A suavidade
+		   pode ser a padrão da propriedade ou pode ser definida nos seus parâmetros.
+
+		   PS: o fadeIn não cria um elemento. Ele apenas altera o display do elemento tirando o valor 'none'.
+
+		   		Ex.: $(".teste").fadeIn();
+
+		   			 $(".teste").fadeIn(1000);
+
+
+.fadeOut() = é uma propriedade que esconde um elemento de forma suave, como se estivesse usando o setTimeOut.
+			A suavidade pode ser a padrão da propriedade ou pode ser definida nos seus parâmetros.
+			
+			PS: o fadeOut apenas escondeo elemento, ou seja, ele altera o display do elemento para 'none'.
+
+				Ex.: $(".teste").fadeOut();
+
+		   			 $(".teste").fadeOut(1000);
+
+
+
+.find() = esse método permite buscar uma informação dentro de elementos com mais de uma informação,
+		  como uma tabela.
+
+
+		  Ex.:   $(".tabelaJogador").find("tr:nth-chind(2)");
+
+
+		  No exemplo, o método .find() irá buscar o segundo filho de tr.
+
+
+
+.offset() = o método offset() mostra a distância que um elemento está de um determinado ponto, como por 
+			exemplo, a distância que o elemento está do topo(.top) da página, o da esquerda(.left) da página etc.
+
+
+			Ex.: var distanciaDoPlacarDoTopo$("#placar").offset().top;
+
+			No exemplo, a variável 'distanciaDoPlacarDoTopo' irá informar a distância que o elemento 'placar' está do topo da página.
+
+
+
+
+
+setInterval() = é uma propriedade que controla o tempo de execução uma função. Dentro dela, você pode colocar  
+				uma função e, dentro dela, a ação controlar o tempo dela para que algum efeito seja dado à página A função setInterval () é comumente usada para definir um atraso para funções executadas repetidamente como animações.
+
+				Ex.:	setInterval(function(){
+
+							var contagemRegressiva= 10;
+							contagemRegressiva--;
+
+						}1000);
+
+
+			 	Veja no exemplo que a cada 1000 milessegundos(1 segundo) há um decremento da variável 'contagemRegressiva'
+
+
+
+setTimeout = 
+
+
+
+
+
+.stop() = esse método é muito usado em animações. A função dele é parar a animação anterior que está sendo 
+		  feita e começar a nova que está sendo ordenada. 
+		  Para ficar mais claro, imagine um botão que use o slideToggle() e toda vez que o usuário aperta o botão, o elemento some e aparece. Se o usuário apertar o mesmo botão diversas vezes repetidamente, o elemento ficará aparecendo e sumindo até cumprir todas as ordens de execução do usuário. Então nasce um loop muito estranho na animação. Para evitar isso, usamos o método .stop() antes da animação para que isso não aconteça.
+
+
+		  Ex.: function mostraPlacar(){
+
+		  		$("#placar").stop().slideToggle();
+		  	   } 
+
+
+
+
+
+
+
+
+
+
+scrollTop = o scrollTop é responsável por levar animação ao scroll da página, levando em seu parâmetro um 
+			valor em pixel("px") entre aspas referente à distância que quer tomar do topo. Essa distância será o quanto a página irá rolar para baixo. O scrollTop no jQuery é usado dentro do método de animação .animate({}), como visto acima.
+
+ 
+				Ex.:		$("body").animate(
+
+							 	{
+									scrollTop: "100"
+
+								},1000);
+
+
+				PS: Em animações como scrollTop aplicamos o .animate({}) no body da página para que todo o body scrolle e, como visto no exemplo acima, passamos o valor com a unidade de medida("px"), porém, em alguns navegadores, como o Chrome, o body não é interpretado corretamente com esse tipo de unidade de medida para essa animação do scroll, assim como outros navegadores não interpretam corretamente com o html, tendo então que aplicar a animação, também, no html da página. Note que, diferente das outras animações do .animate({}) como heigth, widgh, fontSize etc., não é necessário o uso do 'px' informando a unidade de medida.
+
+				Ex.: $("body, html").animate({});
+
+
+
+
+.is() = O jQuery possui a função 'is' que permite consultar uma pseudo class. Por exemplo, toda vez que um 
+		elemento esta com display diferente de none ele ganha a pseudo classe :visible. A função 'is' retorna true caso o elemento esteja visível. 
+
+
+			Ex.:	$('#botao-promocao').click(function() {
+
+					  var promocoes = $(".promocoes");
+					  if(promocoes.is(":visible")) {
+
+					    promocoes.hide();
+					  } else {
+					    promocoes.show();
+					  }
+
+					});
+
+
+
+
+.hasClass(".classe") =  o jQuery possui a função hasClass que retorna true se um elemento possui ou não uma 
+						classe. Todo esse processo é feito a cada clique do usuário.
+
+							Ex.: $('#botao-promocao').click(function() {
+
+								  var promocoes = $('.promocoes');
+								  if(promocoes.hasClass('invisivel')) {
+
+								    promocoes.removeClass('invisivel');
+								  } else {
+								    promocoes.addClass('invisivel');
+								  }
+
+								});
+
+
+
+Math.random() = esse método devolve um número aleatório de 0 a 0.99999999... . Para termos um número acima de 
+				zero, precisamos multiplicar o método por um número positivo.
+
+				Ex.:  Queremos que ele sorteie um número aleatório de 0 a 10.
+
+					  Math.random() * 11; 
+
+					  Note que multipliquei por 11. Isso porque o número que o Math.randon sorteia não chega até 1, então sorteamos por 11 e, a princípio, teremos o número que queremos de forma quebrada.
+
+					  Ex.: 1,222222; 2,444444 etc.
+
+
+Math.floor() = esse método arredonda um número quebrado SEMPRE PARA BAIXO.
+
+				
+				Ex.: Math.floor(Math.random() * 11);
+
+					 suponhamos que o número sorteado pelo Math.random tenha sido o 10.9999... . Com o Math.floor(), esse número sorteado é arredondado para o número inteiro 10.
+
+
+
+.substr(0,10) = o nome desse método é uma "abreviação" de substring. Esse método é usado para extrair uma 
+				sequência de caracteres de um texto já existente. Esse método leva dois parâmetros, o primeiro indica de onde quer começar a sequencia; a segunda indica o término da sequência.
+
+
+				Ex.: 	
+						var frase= $(".frase-do-texto").text();
+						
+						var digitada= areaDigitacao.val();
+						var palavraFrase= frase.substr(0, digitada.length);	
+
+
+						No exemplo usado, estamos comparando a frase de um texto existente no elemento 
+						com a clase 'frase-do-texto'com as palavras digitadas numa textarea e o final da sequencia é exatamete o tamanho da frase digitada. é claro que não está todo o código da comparação aí no exemplo, só extraímos o trecho que se usa o método .substr().
+
+
+
+
+
+
+
+
+
+
+											EVENTOS
+
+
+keypress() = o evento keypress detecta o evento de teclar alguma tecla. O keypress sempre te retornará o 
+			 valor correspondente à tecla acionada, tecnicamente chamado de código ASCII. Para você conseguir capturar o valor da tecla acionada, você deve usar, dentro da função que está nos parâmetros do keypress, o evento de pressionamento de tecla. Entenda melhor no exemplo.
+
+
+			 Ex.: 	campoBusca.on("keypress", function(){
+
+						var codigoDaTecla = (event.keyCode ? event.keyCode : event.which);
+	
+						if(keycode==13){
+
+							console.log("Teclou ENTER");
+						}
+
+					Todo o valor que está dentro da variável 'codigoDaTecla' é um evento de pressionamento de tecla que te retornará o ASCII(código) da tecla digitada. No nosso exemplo, usamos a tecla ENTER, que retorna a ASCII 13.
+
+
+
+
+.mouseEnter() = o evento mouseEnter serve para quando o usuário passar o cursor do mouse sobre o elemento 
+				vinculado a esse evento, o elemento ouça o evento.
+
+					Ex.: $(".foto-receita").mouseEnter({function
+
+							$(".receita-completa").stop().slideDown();
+						 });
+
+
+					No exemplo, quando que o cursor estiver sobre o elemento 'foto-receita', o elemento 'receita-completa' será mostrado.
+
+
+
+.mouseLeave() = o evento mouseLeave serve para quando o usuário tirar o cursor do mouse sobre o elemento 
+				vinculado a esse evento, o elemento ouça o evento.
+
+					Ex.: $(".foto-receita").mouseLeave({function
+
+							$(".receita-completa").stop().slideUp();
+						 });
+
+
+					No exemplo, quando que o cursor sair de sobre o elemento 'foto-receita', o elemento 'receita-completa' será escondido.
+
+
+
+
+
+
+
+
+
+
+								ARRAY E COMO CRIAR UM OBJETO JS
+
+
+ARRAY =  var lista= [];
+
+		 Foi criado um array vazio de lista. Dentro de lista ainda não há nenhum dado.
+
+		 Para colocar dados dentro do array de lista, podemos adicionar diretamente na criação do array ou podemos usar o método .push()
+
+			
+			Ex.: 
+
+				 var lista= ["arroz", "feijão", "carne"];
+				 				0		  1			2
+
+
+				 lista.push("açúcar");
+
+
+
+		 Como já sabemos, cada dado adicionado ocupa um índice que sempre inicia na posição [0].
+		 Para buscarmos um dado específico dentro de um array, temos sempre que informar o índice de posição desse dado.
+
+				 	Ex.: console.log(lista[1]);
+
+				 	O resultado dessa busca será "feijão".
+
+
+		 Podemos também adicionar um objeto JS com vários elementos no array como veremos a seguir em 'como criar um objeto js'.
+
+
+
+
+OBJETO JS = um objeto js é uma variável com vários elementos dentro que podem ser selecionados numa 
+			busca através de .nomeDoElemento
+
+
+				Ex.:	
+
+						var pessoa= {
+
+							nome: "Kelly",
+							idade: "38",
+							sexo: "feminino",
+							cor: "branca"
+
+						};
+
+
+			Para consultarmos a informação específica de cada dado do objeto 'pessoa', usamos um ponto e a referência do dado que se busca.
+
+
+				Ex.:  
+
+						console.log(pessoa.sexo);
+
+						O resultado será 'feminino'
+
+
+
+			Para adicionarmos um objeto num array, basta dar push com o objeto nos parâmetros do array.
+			Para buscar a informação desejada de um objeto dentro do array, basta informar o índice no array que o objeto se encontra e em seguida informar a informação que se quer buscar, assim como vimos acima.
+
+
+				Ex.:  
+
+						var time= [];
+
+
+						var pessoaDoTime= {
+
+							nome: "Kelly",
+							idade: "38",
+							sexo: "feminino",
+							cor: "branca"
+
+						};
+
+						time.push(pessoaDoTime);
+
+						console.log(time[0].nome);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
